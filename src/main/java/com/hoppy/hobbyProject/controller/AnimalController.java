@@ -16,17 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(path = "/animal")
+@RequestMapping(path = "/animal") //spring musi wiedzieć do jakiego kontrolera i metody ma się odwołać
 public class AnimalController {
 
     @Autowired
     AnimalRepository animalRepository;
 
     @GetMapping(path = "/list")
+    //ten kontroler -> localhost:8080/animal/list - animal to kontroler a list to metoda w tym kontrolerze
     public String listAnimals(Model model){
         model.addAttribute("animals", animalRepository.findAll());
-        return "animal/list";
-    }
+        return "animal/list"; //viewresolver wyszukuje pliku widoku o podanej ścieżce
+    }                         //defaultowo viewresolver szuka widoków w resources/templates/....
 
     @PostMapping(path = "/add")
     public String addAnimal(@Valid @ModelAttribute("animal")Animal animal, BindingResult results){

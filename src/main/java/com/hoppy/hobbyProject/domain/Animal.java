@@ -13,7 +13,7 @@ public class Animal {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Size(min = 5)
+    @Size(min = 5) //jest sporo adnotacji które rzutują na ograniczenia i walidacje danych
     private String name;
 
     private int age;
