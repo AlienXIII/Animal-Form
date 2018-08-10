@@ -1,0 +1,46 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Spring5 MVC Hibernate Demo</title>
+    <style type="text/css">
+        .error {
+            color: red;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+        table td {
+            border: 1px solid #565454;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>Input Form</h1>
+<form action="/animal/add" th:action="@{/animal/add}" method="post" name="animal" th:object="${animal}">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" path="name" name="name" th:field="*{name}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+        </tr>
+        <tr>
+            <td>Age</td>
+            <td>
+                <input type="text" path="age" name="age" th:field="*{age}" /> <br />
+                <errors path="age" cssClass="error" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="submit">Submit</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
