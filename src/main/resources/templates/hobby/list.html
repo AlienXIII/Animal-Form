@@ -5,20 +5,21 @@
     <title>Title</title>
 </head>
 <body>
-
- <!--<ul th:each="animal : ${animals}">
-    <li th:text="${animal.getName()}"></li>
+<!--<ul th:each="hobby : ${hobby}">
+    <li th:text="${hobby.getName()}"></li>
 </ul> -->
 <h2>Animal List</h2>
 <table>
     <tr>
         <td><strong>Name</strong></td>
-        <td><strong>Age</strong></td>
+        <td><strong>Description</strong></td>
+        <td><strong>Current Image ID</strong></td>
     </tr>
-    <c:forEach items="${animal}" var="animal">
+    <c:forEach items="${hobby}" var="hobby">
         <tr>
-            <td>${animal.name}</td>
-            <td>${animal.age}</td>
+            <td>${hobby.name}</td>
+            <td>${hobby.description}</td>
+            <td>${hobby.currentImageID}</td>
         </tr>
     </c:forEach>
 </table>

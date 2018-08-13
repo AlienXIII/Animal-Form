@@ -21,7 +21,7 @@
 </head>
 <body>
 <h1>Input Form</h1>
-<form action="/animal/add" th:action="@{/animal/add}" method="post" name="animal" th:object="${animal}">
+<form action="/hobby/add" th:action="@{/hobby/add}" method="post" name="hobby" th:object="${hobby}">
     <table>
         <tr>
             <td>Name</td>
@@ -31,12 +31,20 @@
             </td>
         </tr>
         <tr>
-            <td>Age</td>
+            <td>Description</td>
             <td>
-                <input type="text" path="age" name="age" th:field="*{age}" /> <br />
-                <errors path="age" cssClass="error" />
+                <input type="text" path="description" name="description" th:field="*{name}" /> <br />
+                <errors path="name" cssClass="error" />
             </td>
         </tr>
+        <tr>
+            <td>Current Image ID</td>
+            <td>
+                <input type="number" path="currentImageID" name="currentImageID" th:field="*{currentImageID}" /> <br />
+                <errors path="currentImageID" cssClass="error" />
+            </td>
+        </tr>
+
         <tr>
             <td colspan="2"><button type="submit">Submit</button></td>
         </tr>

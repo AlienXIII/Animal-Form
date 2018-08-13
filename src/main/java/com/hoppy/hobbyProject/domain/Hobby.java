@@ -7,16 +7,16 @@ import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Animal {
+public class Hobby {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
     @Size(min = 5) //jest sporo adnotacji które rzutują na ograniczenia i walidacje danych
     private String name;
-
-    private int age;
+    @Size (min=1)
+    private String description;
+    private int currentImageID;
 
     public long getId() {
         return id;
@@ -34,11 +34,19 @@ public class Animal {
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getCurrentImageID() {
+        return currentImageID;
+    }
+
+    public void setCurrentImageID(int currentImageID) {
+        this.currentImageID = currentImageID;
     }
 }
