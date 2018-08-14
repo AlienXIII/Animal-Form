@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,7 +13,21 @@
 <p>While doing so don't forget to pray for Kota</p>
 <p>Kota [2001-2012] always in our hearts </p>
 
-
+<div sec:authorize="hasAuthority('ROLE_USER')">
+    <div class="col-md-10 col-md-offset-2">
+        <h2>Just a simple user logged. Go play in dirt or smth</h2>
+    </div>
+</div>
+<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    <div class="col-md-10 col-md-offset-2">
+        <h2>This be pretty ADMIN panel for da admin people in admin world</h2>
+    </div>
+</div>
+<div sec:authorize="isAnonymous()">
+    <div class="col-md-10 col-md-offset-2">
+        <h2>No logged user. WTF IZ DIZ? Change this NOW peasant!</h2>
+    </div>
+</div>
 
 
 </body>
