@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+    <form action="/user/save" th:action="@{/user/save}" method="post" name="user" th:object="${user}">
+        <table>
+            <tr>
+                <td>Username</td>
+                <td>
+                    <input type="text" path="username" name="username" th:field="*{username}" /> <br />
+                </td>
+            </tr>
+            <tr>
+                <td>password</td>
+                <td>
+                    <input type="password" path="password" name="password" th:field="*{password}" /> <br />
+                    <errors path="name" cssClass="error" />
+                </td>
+            </tr>
+            <tr>
+                <td>Role</td>
+                <td>
+                    <select name="roles">
+                        <option th:each="role : ${roleList}" th:value="${role.getId()}" th:text="${role.getName()}">
+                    </select>
+                </td>
+                <input type="hidden" name="enabled" value="1">
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>

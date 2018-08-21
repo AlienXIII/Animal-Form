@@ -27,7 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder);
           /*
-          //sztywny admin
+          //Admin na sztywno
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home",
-                        "/test", "/static/**",
+                        "/test", "/static/**","thematrix",
                         "/css/**").permitAll()
                 .antMatchers("/user/**", "/role/**").hasRole("ADMIN")
                 .anyRequest().authenticated()
