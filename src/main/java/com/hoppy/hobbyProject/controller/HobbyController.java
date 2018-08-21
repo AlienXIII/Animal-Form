@@ -1,7 +1,7 @@
 package com.hoppy.hobbyProject.controller;
 
 
-import com.hoppy.hobbyProject.HobbyRepository;
+import com.hoppy.hobbyProject.Repo.HobbyRepository;
 import com.hoppy.hobbyProject.domain.Hobby;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ public class HobbyController {
     @GetMapping(path = "/list")
     //ten kontroler -> localhost:8080/hobby/list - hobby to kontroler a list to metoda w tym kontrolerze
     public String listAnimals(Model model){
-        model.addAttribute("hobby", hobbyRepository.findAll());
+        model.addAttribute("hobbies", hobbyRepository.findAll());
         return "hobby/list"; //viewresolver wyszukuje pliku widoku o podanej ścieżce
     }                         //defaultowo viewresolver szuka widoków w resources/templates/....
 

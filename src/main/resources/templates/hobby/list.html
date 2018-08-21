@@ -15,14 +15,16 @@
         <td><strong>Description</strong></td>
         <td><strong>Current Image ID</strong></td>
     </tr>
-    <c:forEach items="${hobby}" var="hobby">
+    <th:block th:each ="hobby : ${hobbies}">
         <tr>
-            <td>${hobby.name}</td>
-            <td>${hobby.description}</td>
-            <td>${hobby.currentImageID}</td>
+            <td th:text="${hobby.name}"></td>
+            <td th:text="${hobby.description}"></td>
+            <td th:text="${hobby.currentImageID}"></td>
         </tr>
-    </c:forEach>
+    </th:block>
 </table>
+<p>You done? Then go <a href="/">back</a> where you came from</p>
+<p>Don't you want to <a href="/error">edit</a> some thing mon?</p>
 </body>
 </html>
 </body>

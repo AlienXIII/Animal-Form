@@ -1,4 +1,4 @@
-package com.hoppy.hobbyProject;
+package com.hoppy.hobbyProject.Repo;
 
 import com.hoppy.hobbyProject.domain.Hobby;
 import org.springframework.data.repository.CrudRepository;

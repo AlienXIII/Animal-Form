@@ -2,14 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security </title>
+    <title>Loguj sie a nie czekasz na oklasky</title>
+    <meta charset="utf-8">
 </head>
 <body>
 <div th:if="${param.error}">
     Juzernejm i pasłord jest inwalidą
 </div>
 <div th:if="${param.logout}">
-    Wylogowany. Sio mie stont!
+    Wylogowany. Sio mie stont, bo psy spuszcze!
 </div>
 <form th:action="@{/login}" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
