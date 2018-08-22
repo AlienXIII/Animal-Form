@@ -12,33 +12,69 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RequestMapping(path = "/hobby") //spring musi wiedzieć do jakiego kontrolera i metody ma się odwołać
+@RequestMapping(path = "/hobby")
 public class HobbyController {
 
     @Autowired
     HobbyRepository hobbyRepository;
 
+
+
     @GetMapping(path = "/list")
-    //ten kontroler -> localhost:8080/hobby/list - hobby to kontroler a list to metoda w tym kontrolerze
-    public String listAnimals(Model model){
+    public String listHobby(Model model){
         model.addAttribute("hobbies", hobbyRepository.findAll());
         return "hobby/list"; //viewresolver wyszukuje pliku widoku o podanej ścieżce
     }                         //defaultowo viewresolver szuka widoków w resources/templates/....
 
-    @PostMapping(path = "/add")
-    public String addAnimal(@Valid @ModelAttribute("hobby") Hobby hobby, BindingResult results){
+    @PostMapping(path = "/add") //tutaj mozliwe ze trzeba bedzie dorzucic add or edit <-to rzekł mentor
+    public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby, BindingResult results){
 
         if(results.hasErrors()){
             System.out.println("an Ilusion? What are you hiding?");
-            return ("redirect:/hobby/hobbyForm");
+            return ("hobby/hobbyForm");
         }
         hobbyRepository.save(hobby);
-        return ("redirect:/hobby/list");
+        return ("redirect:list");
     }
 
     @GetMapping(path = "/hobbyForm")
     public String listForm(Model model){
         model.addAttribute("hobby", new Hobby());
         return "hobby/hobbyForm";
+    }
+
+    @GetMapping(path = "/editHobby")
+    /*
+        tutaj przygotowujemy tylko obiekt do którego będzie pakowany form i wyświetlamy ten form.
+        hobbyId przesyłamy by wiedzieć któy objekt edytujemy
+     */
+    public String editHobby(Model model, @RequestParam Long hobbyId){
+        model.addAttribute("hobby", hobbyRepository.getOne(hobbyId)); //dodajemy sobie do modelu na front nowy objekcik hobby
+        model.addAttribute("hobbyId", hobbyId); //w parametrach wysyłamy hobbyId żeby wiedzieć który obiekt edytujemy
+        //to wyżeh można by wywalić i w hidden field wykorzystać hobby.getId()
+        //i dodajemy go do modelu ---- można też zrobić przez @PathVariable
+        return "hobby/editHobby";
+    }
+
+    @PostMapping(path = "/save") //to nasz edit
+    /*
+        @Valid @ModelAttribute - validuje ci twoje entity Hobby na podstawie adnotacji przy fieldach @Size
+        @NotNull itd itd, @ModelAttribute pomaga zmapować forma z frontu do obiektu hobby
+        name= "hobby" musi się zgadzać z th:object="hobby" na froncie
+        hobby to nasz objekt z frontu hobbyInDb z bazy
+        przypisujemy dane z hobby do hobbyInDb i zapisuje w bazie
+        saveAndFlush - zapisz i odświerz stosujemy by zmiany były automatycznie zapisane i widoczne
+        bo niekiedy może to chwilę potrwać. gdy musimy mieć zmiany natychmiast a najczęściej tak jesty to robimy
+        saveAndFlush a nie samo save (JpaRepository w HobbyRepository ma automatycznie tę metodę, normalnie
+        musiał byś sam querysy pisać)
+     */
+    public String editHobby(@Valid @ModelAttribute(name = "hobby") Hobby hobby,
+                            @RequestParam Long hobbyId ){
+        Hobby hobbyInDb = hobbyRepository.getOne(hobbyId);
+        hobbyInDb.setCurrentImageID(hobby.getCurrentImageID());
+        hobbyInDb.setDescription(hobby.getDescription());
+        hobbyInDb.setName(hobby.getName());
+        hobbyRepository.saveAndFlush(hobbyInDb);
+        return "success";
     }
 }

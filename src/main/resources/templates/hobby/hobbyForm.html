@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Spring5 MVC Hibernate Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Wpisz coś ładnego, nie wstydź się</title>
     <style type="text/css">
         .error {
             color: red;
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-<h1>Input Form</h1>
+<h1>NOWE HOBBY</h1>
 <form action="/hobby/add" th:action="@{/hobby/add}" method="post" name="hobby" th:object="${hobby}">
     <table>
         <tr>
@@ -44,9 +44,8 @@
                 <errors path="currentImageID" cssClass="error" />
             </td>
         </tr>
-
         <tr>
-            <td colspan="2"><button type="submit">Submit</button></td>
+            <td colspan="2"><button type="submit">Uczyń</button></td>
         </tr>
     </table>
 </form>

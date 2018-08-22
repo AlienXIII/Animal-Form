@@ -1,30 +1,28 @@
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Piękna lista hobisuff</title>
 </head>
 <body>
-<!--<ul th:each="hobby : ${hobby}">
-    <li th:text="${hobby.getName()}"></li>
-</ul> -->
-<h2>Animal List</h2>
+<h2>Hobby List</h2>
 <table>
     <tr>
         <td><strong>Name</strong></td>
         <td><strong>Description</strong></td>
         <td><strong>Current Image ID</strong></td>
+        <td><strong>Edit Link</strong></td>
     </tr>
     <th:block th:each ="hobby : ${hobbies}">
         <tr>
             <td th:text="${hobby.name}"></td>
             <td th:text="${hobby.description}"></td>
             <td th:text="${hobby.currentImageID}"></td>
+            <td><a th:href="@{editHobby(hobbyId=${hobby.getId()})}">Edit</a> </td>
         </tr>
     </th:block>
 </table>
 <p>You done? Then go <a href="/">back</a> where you came from</p>
-<p>Don't you want to <a href="/error">edit</a> some thing mon?</p>
 </body>
 </html>
 </body>

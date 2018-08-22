@@ -8,6 +8,9 @@ import java.util.Set;
 @Entity
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
+    //universal version identifier for a Serializable class.
+    // Deserialization uses this number to ensure that a loaded class corresponds exactly to a serialized object.
+    // If no match is found, then an InvalidClassException is thrown.
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
