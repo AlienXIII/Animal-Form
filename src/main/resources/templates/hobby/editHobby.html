@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Edycja listy hobby</title>
+</head>
+<body>
+<h1>EDYTUJEMY HOBBY</h1>
+<form action="/hobby/add" th:action="@{/hobby/save}" method="post" name="hobby" th:object="${hobby}">
+    <table>
+        <tr>
+            <td>Name</td>
+            <td>
+                <input type="text" path="name" name="name" th:field="*{name}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+        </tr>
+        <tr>
+            <td>Description</td>
+            <td>
+                <input type="text" path="description" name="description" th:field="*{description}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+        </tr>
+        <tr>
+            <td>Current Image ID</td>
+            <td>
+                <input type="number" path="currentImageID" name="currentImageID" th:field="*{currentImageID}" /> <br />
+                <errors path="currentImageID" cssClass="error" />
+            </td>
+        </tr>
+        <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
+        <tr>
+            <td colspan="2"><button type="submit">Edytuj</button></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
