@@ -42,13 +42,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }*/
     }
 
-    @Override
+    @Override //upublicznianie resources z powodu spring security na permit all
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .antMatchers("/", "/home",
-                        "/test", "/static/**","thematrix",
-                        "/css/**").permitAll()
+                        "/test", "/static/**","/thematrix",
+                        "/css/**", "/js/**").permitAll()
                 .antMatchers("/user/**", "/role/**").hasRole("ADMIN")
                 .antMatchers("/hobby/**").authenticated()
                 .anyRequest().authenticated()

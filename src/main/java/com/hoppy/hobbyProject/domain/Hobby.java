@@ -12,7 +12,7 @@ public class Hobby {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    @Size(min = 5) //jest sporo adnotacji które rzutują na ograniczenia i walidacje danych
+    @Size(min = 5)
     private String name;
     @Size (min=1)
     private String description;
@@ -49,4 +49,6 @@ public class Hobby {
     public void setCurrentImageID(int currentImageID) {
         this.currentImageID = currentImageID;
     }
+
+    //tutaj trzeba bedzie wciepac cos z plikami graficznymi
 }

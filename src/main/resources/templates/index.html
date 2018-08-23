@@ -30,6 +30,12 @@ ten śmieć powinien wyskoczyć na stronce!
         <h2>No logged user. WTF IZ DIZ? Change this NOW peasant!</h2>
     </div>
 </div>
+<div th:if="${username != null}">
+    <h2 th:text="${'Hello ' + username}"></h2>
+</div>
+<div th:if="${anonymous != null}">
+    <h2 th:text="${anonymous}"></h2>
+</div>
 
 
 </body>

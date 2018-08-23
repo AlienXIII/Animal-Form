@@ -23,9 +23,9 @@ public class User implements Serializable {
     private String password;
 
     @Column(name = "enabled")
-    private int enabled;
+    private boolean enabled;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL) //mapuje relacje miedzy entity na baze
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
 
@@ -38,7 +38,7 @@ public class User implements Serializable {
         this.enabled = user.enabled;
     }
 
-    public int getEnabled(){
+    public boolean getEnabled(){
         return enabled;
     }
 
@@ -50,7 +50,7 @@ public class User implements Serializable {
         return username;
     }
 
-    public void setEnabled(int enabled){
+    public void setEnabled(boolean enabled){
         this.enabled = enabled;
     }
     public void setPassword(String password){
