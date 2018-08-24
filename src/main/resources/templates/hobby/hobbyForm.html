@@ -21,13 +21,16 @@
 </head>
 <body>
 <h1>NOWE HOBBY</h1>
-<form action="/hobby/add" th:action="@{/hobby/add}" method="post" name="hobby" th:object="${hobby}">
+<form action="/hobby/add" th:action="@{/hobby/add}" method="post" name="hobby" th:object="${hobby}" enctype="multipart/form-data">
     <table>
         <tr>
             <td>Name</td>
             <td>
                 <input type="text" path="name" name="name" th:field="*{name}" /> <br />
                 <errors path="name" cssClass="error" />
+            </td>
+            <td>
+                <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Error</div>
             </td>
         </tr>
         <tr>
@@ -36,6 +39,9 @@
                 <input type="text" path="description" name="description" th:field="*{description}" /> <br />
                 <errors path="name" cssClass="error" />
             </td>
+            <td>
+                <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Error</div>
+            </td>
         </tr>
         <tr>
             <td>Current Image ID</td>
@@ -43,10 +49,16 @@
                 <input type="number" path="currentImageID" name="currentImageID" th:field="*{currentImageID}" /> <br />
                 <errors path="currentImageID" cssClass="error" />
             </td>
+            <td>
+                <div th:if="${#fields.hasErrors('currentImageID')}" th:errors="*{currentImageID}">Error</div>
+            </td>
         </tr>
         <tr>
             <td>Image file</td>
             <td><input id ="file" type="file" name="file"></td>
+            <td>
+                <div th:if="${#fields.hasErrors('file')}" th:errors="*{file}">Error</div>
+            </td>
         </tr>
         <tr>
             <td colspan="2"><button type="submit">Uczyń</button></td>

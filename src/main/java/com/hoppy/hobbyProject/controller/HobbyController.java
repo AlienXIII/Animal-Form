@@ -3,13 +3,17 @@ package com.hoppy.hobbyProject.controller;
 
 import com.hoppy.hobbyProject.Repo.HobbyRepository;
 import com.hoppy.hobbyProject.domain.Hobby;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 @RequestMapping(path = "/hobby")
@@ -17,6 +21,7 @@ public class HobbyController {
 
     @Autowired
     HobbyRepository hobbyRepository;
+    Logger log = LoggerFactory.getLogger(HobbyController.class);
 
 
 
@@ -27,13 +32,15 @@ public class HobbyController {
     }                         //defaultowo viewresolver szuka widoków w resources/templates/....
 
     @PostMapping(path = "/add") //tutaj mozliwe ze trzeba bedzie dorzucic add or edit <-to rzekł mentor
-    public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby, BindingResult results){
+    public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby,BindingResult results){
 
         if(results.hasErrors()){
             System.out.println("an Ilusion? What are you hiding?");
+
             return ("hobby/hobbyForm");
         }
-        hobbyRepository.save(hobby);
+            hobbyRepository.saveAndFlush(hobby);
+
         return ("redirect:list");
     }
 
@@ -63,14 +70,15 @@ public class HobbyController {
         name= "hobby" musi się zgadzać z th:object="hobby" na froncie
         hobby to nasz objekt z frontu hobbyInDb z bazy
         przypisujemy dane z hobby do hobbyInDb i zapisuje w bazie
-        saveAndFlush - zapisz i odświerz stosujemy by zmiany były automatycznie zapisane i widoczne
-        bo niekiedy może to chwilę potrwać. gdy musimy mieć zmiany natychmiast a najczęściej tak jesty to robimy
+        saveAndFlush - zapisz i odświez stosujemy by zmiany były automatycznie zapisane i widoczne
+        bo niekiedy może to chwilę potrwać. gdy musimy mieć zmiany natychmiast a najczęściej tak jest to robimy
         saveAndFlush a nie samo save (JpaRepository w HobbyRepository ma automatycznie tę metodę, normalnie
         musiał byś sam querysy pisać)
      */
     public String editHobby(@Valid @ModelAttribute(name = "hobby") Hobby hobby,
                             @RequestParam Long hobbyId ){
         Hobby hobbyInDb = hobbyRepository.getOne(hobbyId);
+        //tu jest miejsce na setter dla file
         hobbyInDb.setCurrentImageID(hobby.getCurrentImageID());
         hobbyInDb.setDescription(hobby.getDescription());
         hobbyInDb.setName(hobby.getName());
