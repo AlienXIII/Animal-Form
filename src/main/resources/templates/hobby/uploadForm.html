@@ -1,0 +1,39 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Wciepej łobrozek</title>
+    <style type="text/css">
+        .error {
+            color: red;
+        }
+        table {
+            width: 50%;
+            border-collapse: collapse;
+            border-spacing: 0px;
+        }
+        table td {
+            border: 1px solid #565454;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+<h1>WCIEPAJ OBRAZEK</h1>
+<form action="/hobby/uploadFile" th:action="@{/hobby/uploadFile}" method="post" enctype="multipart/form-data">
+    <table>
+        <tr>
+            <td>Image file</td>
+            <td><input id ="file" type="file" name="file"></td>
+        </tr>
+        <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
+        <tr>
+            <td colspan="2"><button type="submit">Uczyń</button></td>
+        </tr>
+    </table>
+</form>
+<p>You done? Then go <a href="/">back</a> where you came from</p>
+<p>Let's what we have on a  <a href="/hobby/list">list</a></p>
+</body>
+</html>
