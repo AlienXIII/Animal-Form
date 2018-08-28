@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.*;
 
 @Controller
 @RequestMapping(path = "/hobby")
@@ -51,37 +53,51 @@ public class HobbyController {
     }
 
     @GetMapping(path = "/editHobby")
-    /*
-        tutaj przygotowujemy tylko obiekt do którego będzie pakowany form i wyświetlamy ten form.
-        hobbyId przesyłamy by wiedzieć któy objekt edytujemy
-     */
     public String editHobby(Model model, @RequestParam Long hobbyId){
-        model.addAttribute("hobby", hobbyRepository.getOne(hobbyId)); //dodajemy sobie do modelu na front nowy objekcik hobby
-        model.addAttribute("hobbyId", hobbyId); //w parametrach wysyłamy hobbyId żeby wiedzieć który obiekt edytujemy
-        //to wyżeh można by wywalić i w hidden field wykorzystać hobby.getId()
-        //i dodajemy go do modelu ---- można też zrobić przez @PathVariable
+        model.addAttribute("hobby", hobbyRepository.getOne(hobbyId));
+        model.addAttribute("hobbyId", hobbyId);
         return "hobby/editHobby";
     }
 
-    @PostMapping(path = "/save") //to nasz edit
-    /*
-        @Valid @ModelAttribute - validuje ci twoje entity Hobby na podstawie adnotacji przy fieldach @Size
-        @NotNull itd itd, @ModelAttribute pomaga zmapować forma z frontu do obiektu hobby
-        name= "hobby" musi się zgadzać z th:object="hobby" na froncie
-        hobby to nasz obiekt z frontu hobbyInDb z bazy
-        przypisujemy dane z hobby do hobbyInDb i zapisuje w bazie
-        saveAndFlush - zapisz i odświez stosujemy by zmiany były automatycznie zapisane i widoczne
-        bo niekiedy może to chwilę potrwać. gdy musimy mieć zmiany natychmiast a najczęściej tak jest to robimy
-        saveAndFlush a nie samo save (JpaRepository w HobbyRepository ma automatycznie tę metodę
-     */
+    @PostMapping(path = "/save")
+
     public String editHobby(@Valid @ModelAttribute(name = "hobby") Hobby hobby,
                             @RequestParam Long hobbyId ){
         Hobby hobbyInDb = hobbyRepository.getOne(hobbyId);
-        //hobbyInDb.setFile(hobby.getFile());
         hobbyInDb.setCurrentImageID(hobby.getCurrentImageID());
         hobbyInDb.setDescription(hobby.getDescription());
         hobbyInDb.setName(hobby.getName());
         hobbyRepository.saveAndFlush(hobbyInDb);
         return "success";
     }
+
+    @GetMapping(path = "/uploadFile")
+    public String upload(@RequestParam Long hobbyId, Model model){
+        model.addAttribute("hobbyId", hobbyId);
+
+        return "hobby/uploadForm";
+    }
+
+    @PostMapping(path = "/uploadFile")
+    //wysyłam formem plik i hobbyId jako hidden
+    public String upload(@RequestParam Long hobbyId, @RequestParam MultipartFile file){
+        Hobby hobby = hobbyRepository.getOne(hobbyId); //wyciągamy hobby z bazy jesli istnieje
+
+        if(hobby != null && !file.isEmpty()){
+            Path rootLocation = Paths.get("upload");
+            //metoda która zwraca path względem pliku który damy hobbyProject/upload/xyz.jpg
+
+            try(InputStream inputStream = file.getInputStream()){ //inputStream to poprostu strumień danych
+                Files.copy(inputStream, rootLocation.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+
+                hobby.setFileName(file.getOriginalFilename());
+                hobbyRepository.saveAndFlush(hobby); //wyciągam inputStream z pliku i za pomocą Files zapisuje/kopiuję
+            }catch (IOException e){
+                System.out.println("Obrassek spsuty!");
+            }
+            return "success";
+        }
+        return "error";
+    }
+
 }

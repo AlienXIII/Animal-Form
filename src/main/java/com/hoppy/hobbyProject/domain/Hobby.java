@@ -1,10 +1,11 @@
 package com.hoppy.hobbyProject.domain;
 
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.io.IOException;
 
 @Entity
 public class Hobby {
@@ -18,8 +19,7 @@ public class Hobby {
     private String description;
     private int currentImageID;
 
-    @Lob
-    private byte[] file;
+    private String fileName;
 
     public long getId() {
         return id;
@@ -53,17 +53,11 @@ public class Hobby {
         this.currentImageID = currentImageID;
     }
 
-    public byte[] getFile() {
-        return file;
+    public String getFileName() {
+        return fileName;
     }
-        //setter zmieniamy z defaultowego na taki któy przyjmuje MultipartFile
-        // i tu jedynie do naszego Loba byte[] file przypisujemy file.getBytes()
 
-    public void setFile(MultipartFile file) {
-            try {
-                this.file = file.getBytes();
-            }catch (IOException e){     //błędy zapisu pliku. Disconnect, baza niedostępna itp
-
-        }
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
