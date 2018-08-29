@@ -86,11 +86,20 @@ public class HobbyController {
         if(hobby != null && !file.isEmpty()){
             Path rootLocation = Paths.get("upload");
             //metoda która zwraca path względem pliku który damy hobbyProject/upload/xyz.jpg
+            int indexOfDot = file.getOriginalFilename().indexOf('.');
+            String fileExt = file.getOriginalFilename().substring(indexOfDot);
+            System.out.println("EXTENSION: " + fileExt);
+
+            String vari = "janek";
+            System.out.println(vari);
+            vari = "nie janek";
+            System.out.println(vari);
 
             try(InputStream inputStream = file.getInputStream()){ //inputStream to poprostu strumień danych
-                Files.copy(inputStream, rootLocation.resolve(file.getOriginalFilename()), StandardCopyOption.REPLACE_EXISTING);
+                String fileName = "upload_" + hobbyId + fileExt;
+                Files.copy(inputStream, rootLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
 
-                hobby.setFileName(file.getOriginalFilename());
+                hobby.setFileName(fileName);
                 hobbyRepository.saveAndFlush(hobby); //wyciągam inputStream z pliku i za pomocą Files zapisuje/kopiuję
             }catch (IOException e){
                 System.out.println("Obrassek spsuty!");

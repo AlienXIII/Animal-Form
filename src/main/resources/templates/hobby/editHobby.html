@@ -28,8 +28,8 @@
                 <input type="number" path="currentImageID" name="currentImageID" th:field="*{currentImageID}" /> <br />
                 <errors path="currentImageID" cssClass="error" />
             </td>
-
         </tr>
+        <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
         <tr>
             <td colspan="2"><button type="submit">Edytuj</button></td>
         </tr>
