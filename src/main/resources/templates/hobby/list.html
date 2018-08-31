@@ -11,8 +11,8 @@
         <td><strong>Name</strong></td>
         <td><strong>Description</strong></td>
         <td><strong>Current Image ID</strong></td>
-        <td><strong>File Name</strong></td>
         <td><strong>Edit Link</strong></td>
+        <td><strong>File list</strong></td>
         <td><strong>Upload Link</strong></td>
     </tr>
     <th:block th:each ="hobby : ${hobbies}">
@@ -20,8 +20,12 @@
             <td th:text="${hobby.name}"></td>
             <td th:text="${hobby.description}"></td>
             <td th:text="${hobby.currentImageID}"></td>
-            <td th:text="${hobby.getFileName()}"></td>
             <td><a th:href="@{editHobby(hobbyId=${hobby.getId()})}">Edit</a> </td>
+            <td><select>
+                <option th:if="${hobby.getFileNames() == null || hobby.getFileNames().isEmpty()}" value="empty" th:utext="'Empty'"></option>
+                <option th:each="fileName : ${hobby.getFileNames()}"
+                        th:utext="${fileName}"/>
+            </select></td>
             <td><a th:href="@{uploadFile(hobbyId=${hobby.getId()})}">Upload File</a> </td>
         </tr>
     </th:block>

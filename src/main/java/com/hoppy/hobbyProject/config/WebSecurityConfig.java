@@ -26,20 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService()).passwordEncoder(passwordEncoder);
-          /*
-          //Admin na sztywno
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        UserDetails user =
-                User.withDefaultPasswordEncoder()
-                        .username("user")
-                        .password("123")
-                        .roles("ADMIN")
-                        .build();
 
-        return new InMemoryUserDetailsManager(user);
-    }*/
     }
 
     @Override //upublicznianie resources z powodu spring security na permit all

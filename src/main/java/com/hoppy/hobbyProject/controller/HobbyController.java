@@ -3,6 +3,7 @@ package com.hoppy.hobbyProject.controller;
 
 import com.hoppy.hobbyProject.Repo.HobbyRepository;
 import com.hoppy.hobbyProject.domain.Hobby;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +17,15 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(path = "/hobby")
+@Slf4j
 public class HobbyController {
 
     @Autowired
     HobbyRepository hobbyRepository;
-    Logger log = LoggerFactory.getLogger(HobbyController.class);
-
-
 
     @GetMapping(path = "/list")
     public String listHobby(Model model){
@@ -60,7 +60,6 @@ public class HobbyController {
     }
 
     @PostMapping(path = "/save")
-
     public String editHobby(@Valid @ModelAttribute(name = "hobby") Hobby hobby,
                             @RequestParam Long hobbyId ){
         Hobby hobbyInDb = hobbyRepository.getOne(hobbyId);
@@ -88,18 +87,25 @@ public class HobbyController {
             //metoda która zwraca path względem pliku który damy hobbyProject/upload/xyz.jpg
             int indexOfDot = file.getOriginalFilename().indexOf('.');
             String fileExt = file.getOriginalFilename().substring(indexOfDot);
-            System.out.println("EXTENSION: " + fileExt);
 
-            String vari = "janek";
-            System.out.println(vari);
-            vari = "nie janek";
-            System.out.println(vari);
+            long filesPerHobbyCounter = hobbyRepository.countFilesByHobbyId(hobby.getId()) + 1;
+            try(InputStream inputStream = file.getInputStream()){ // strumień danych
+                String fileName = "upload_" + hobbyId + "_" + filesPerHobbyCounter + fileExt;
 
-            try(InputStream inputStream = file.getInputStream()){ //inputStream to poprostu strumień danych
-                String fileName = "upload_" + hobbyId + fileExt;
                 Files.copy(inputStream, rootLocation.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+                if(hobby.getFileNames() == null){
+                    ArrayList<String> newFileNames = new ArrayList<>();
+                    newFileNames.add(fileName);  //jeżeli hobby niema jeszcze plików zadnych
+                    // to mu tworzymy nową listę
+                    //newFileNames i dodajemy nazwę pliku którą tworzymy podczas uploadu czyli fileName u góry
+                    // do tej nowej listy
+                    //ustawiamy listę FileNames na newFileNames którą stworzyliśmy
+                    hobby.setFileNames(newFileNames);
+                }else {
+                    //jeśli lista istnieje to dodajemy tylko nowa nazwe pliku
+                    hobby.getFileNames().add(fileName);
+                }
 
-                hobby.setFileName(fileName);
                 hobbyRepository.saveAndFlush(hobby); //wyciągam inputStream z pliku i za pomocą Files zapisuje/kopiuję
             }catch (IOException e){
                 System.out.println("Obrassek spsuty!");

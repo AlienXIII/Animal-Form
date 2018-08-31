@@ -1,13 +1,22 @@
 package com.hoppy.hobbyProject.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.util.List;
+
+//Lombok z automatu dla ciebie robi settery i gettery. nic nie musisz dodawać
+//jeśli jakiś setter czy też getter ma działać inaczej niż standardowo to robisz jak poniżej
+//a jak chcesz zeby nie wszystkie fieldy mialy settera/gettera to adnotacje dajesz przy fieldzie
+//ma jeszcze kilka przydatnych rzeczy jak hashCode i equals
+//Slf4j i log to są Loggery czyli takie system.out.println tylko dużo lżejszy bardziej intuicyjny
+//i stosowany do np zapisywania logów w pliku
 @Entity
+@Getter
+@Setter
 public class Hobby {
 
     @Id
@@ -19,45 +28,6 @@ public class Hobby {
     private String description;
     private int currentImageID;
 
-    private String fileName;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public int getCurrentImageID() {
-        return currentImageID;
-    }
-
-    public void setCurrentImageID(int currentImageID) {
-        this.currentImageID = currentImageID;
-    }
-
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+    @ElementCollection
+    private List<String> fileNames;
 }
