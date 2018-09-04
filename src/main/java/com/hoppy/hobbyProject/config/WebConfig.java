@@ -27,8 +27,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override //handlery dla css i js na stronke
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
-        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
         //Mapujemy sobie /images/upload_14.jpg na przykład który wyciąga img z dokładnego miejsca na dysku
         //więc na stronce żeby ukryć ścieżkę absulutną (c:/asd/asd/...) wpisujemy /images/**
         registry.addResourceHandler("/images/**").addResourceLocations("file:///C:/Projekty/hobbyProject/upload/");
