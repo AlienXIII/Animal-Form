@@ -10,23 +10,41 @@
     <tr>
         <td><strong>Name</strong></td>
         <td><strong>Description</strong></td>
-        <td><strong>Current Image ID</strong></td>
         <td><strong>Edit Link</strong></td>
         <td><strong>File list</strong></td>
         <td><strong>Upload Link</strong></td>
+        <td><strong>Current Image</strong></td>
     </tr>
+    <!-- dla każdego hobby z hobbiesów w modelu
+    tę nazwę hobby ustalasz sam
+    wtedy dla każdego hobby(kupa) z hobbiesów-->
     <th:block th:each ="hobby : ${hobbies}">
         <tr>
             <td th:text="${hobby.name}"></td>
             <td th:text="${hobby.description}"></td>
-            <td th:text="${hobby.currentImageID}"></td>
             <td><a th:href="@{editHobby(hobbyId=${hobby.getId()})}">Edit</a> </td>
             <td><select>
-                <option th:if="${hobby.getFileNames() == null || hobby.getFileNames().isEmpty()}" value="empty" th:utext="'Empty'"></option>
-                <option th:each="fileName : ${hobby.getFileNames()}"
-                        th:utext="${fileName}"/>
+                <option th:if="${hobby.getFileNames() == null || hobby.getFileNames().isEmpty()}"
+                        value="empty" th:utext="'Empty'"></option>
+                <option th:each="fileName : ${hobby.getFileNames()}" th:utext="${fileName}"/>
+                        <!-- ten fileName odnosi się tylko i wyłącznie do tego selecta i optionów-->
             </select></td>
             <td><a th:href="@{uploadFile(hobbyId=${hobby.getId()})}">Upload File</a> </td>
+            <!--dla każdej nazwy z listy nazw plików hobbysa-->
+            <!--tworzą blok tabelki (<td>) dla każdego pliku-->
+            <td>
+                <!--FileNames nigdzie nie istnieje spójż-->
+                <!-- a gdybysmy chcieli dla jednego?-->
+                <!--musisz wiedzieć dla którego wtedy albo go dodajesz w modelu albo wyciągasz tutaj-->
+                <!-- w bloku tabelki (<td>) tworzę img dla każdego pliku
+                    sprawdzam czy lista imydzy nie jest przypadkiem pusta !hobby.getFileNames().isEmpty()
+                    czyli " jeżeli lista plików nie jest pusta jebnić img
+                    indexOutOfBounds jak sama nazwa wskazuje wypieprza gdy chcesz dostępu do elementu np listy którego niema
+                    jeden z hobbysów nie miał wcale plików więc hobby.getFileNames().get(0)
+                    niema też pliku na pierwszej pozycji-->
+                <img th:if="${!hobby.getFileNames().isEmpty()}" th:src="@{/images/{img}(img=${hobby.getFileNames().get(0)})}"
+                     height="50" width="50" />
+            </td>
         </tr>
     </th:block>
 </table>

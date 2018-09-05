@@ -1,5 +1,7 @@
 package com.hoppy.hobbyProject.controller;
 
+import com.hoppy.hobbyProject.Repo.YouTubeRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +20,19 @@ public class IndexController {
         }else{
             model.addAttribute("anonymous", "Hello whoever u are!");
         }
+
         return "index";
     }
+
+
+    @Autowired
+    YouTubeRepo youTubeRepo
+
+    public String index(Model model){
+        model.addAttribute("yt", YouTubeRepo.findAll());
+    }
+
+
+
+
 }

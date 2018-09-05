@@ -30,6 +30,17 @@ public class HobbyController {
     @Autowired
     Environment env;
 
+    //    ta metoda sszykuje model atrybótów do wykorzystania na hobby/list.html
+    //    za pomocą thymeleaf (czyli tagi th:coś) możesz wyciągać różne dane a atrrybutów modelu
+    //    np z objektów który przesylasz na list.html
+    //    dodajesz do modelu listę hobbiesów więc do nich masz dostęp
+    //    chcesz coś innego musisz dodać do modelu
+    //    co chciales zrobić na tej liście? miniaturki z imydży dla każdego hobbysa?aye
+    //    więc pomyśl, wiesz że potrzebujesz listę hobbysow i ją dodales do modelu.
+    //    każdy hobby ma fileNames i możesz ją wyciągnąć getterem getFileNames()
+    //    więc iterujesz dwa razy
+    //    po hobbysach i wewnątrz po ich zdjęciach
+
     @GetMapping(path = "/list")
     public String listHobby(Model model){
         model.addAttribute("hobbies", hobbyRepository.findAll());

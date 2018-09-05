@@ -44,16 +44,6 @@
             </td>
         </tr>
         <tr>
-            <td>Current Image ID</td>
-            <td>
-                <input type="number" path="currentImageID" name="currentImageID" th:field="*{currentImageID}" /> <br />
-                <errors path="currentImageID" cssClass="error" />
-            </td>
-            <td>
-                <div th:if="${#fields.hasErrors('currentImageID')}" th:errors="*{currentImageID}">Error</div>
-            </td>
-        </tr>
-        <tr>
             <td colspan="2"><button type="submit">MAKE IT HAPPEN</button></td>
         </tr>
     </table>
