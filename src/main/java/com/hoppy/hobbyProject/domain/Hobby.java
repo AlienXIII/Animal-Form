@@ -25,6 +25,7 @@ public class Hobby {
     @Size(min = 5)
     private String name;
     @Size (min=1)
+    @Lob
     private String description;
     private int currentImageID;
 

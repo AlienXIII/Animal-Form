@@ -4,9 +4,8 @@ package com.hoppy.hobbyProject.controller;
 import com.hoppy.hobbyProject.Repo.HobbyRepository;
 import com.hoppy.hobbyProject.domain.Hobby;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
@@ -27,6 +27,9 @@ public class HobbyController {
     @Autowired
     HobbyRepository hobbyRepository;
 
+    @Autowired
+    Environment env;
+
     @GetMapping(path = "/list")
     public String listHobby(Model model){
         model.addAttribute("hobbies", hobbyRepository.findAll());
@@ -34,7 +37,7 @@ public class HobbyController {
     }                         //defaultowo viewresolver szuka widoków w resources/templates/....
 
     @PostMapping(path = "/add")
-    public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby,BindingResult results){
+    public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby, BindingResult results){
 
         if(results.hasErrors()){
             System.out.println("an Ilusion? What are you hiding?");
@@ -113,6 +116,63 @@ public class HobbyController {
             return "success";
         }
         return "error";
+    }
+
+    @GetMapping(path = "/deleteImage")
+    public String deleteImage(@RequestParam long hobbyId, @RequestParam String imageName, Model model){
+        Hobby hobby = hobbyRepository.getOne(hobbyId);
+
+        if(hobby == null){
+            log.warn("Co to robisz ciulu!?");
+            return "hobby/list";
+        }else  if (!hobby.getFileNames().contains(imageName)){
+            log.info("Ten hobby nie ma takiego imydża");
+            return "hobby/list"; //DRY
+        }
+
+        File file = new File(env.getProperty("upload.path")+imageName);
+        if(!file.delete()){
+            log.warn("Upsie fucken");
+        }//that should do.
+        hobby.getFileNames().remove(imageName);
+
+        hobbyRepository.saveAndFlush(hobby);
+
+        model.addAttribute("hobbyId", hobbyId);
+        model.addAttribute("hobby", hobby);
+        return "success";
+
+    }
+
+    @GetMapping(path = "/changeImage")
+    public String changeImageForm(@RequestParam long hobbyId, @RequestParam String imageName, Model model){
+        model.addAttribute("hobbyId", hobbyId);
+        model.addAttribute("imageName", imageName);
+        return "hobby/changeImage";
+    }
+
+    @PostMapping(path = "/changeImage")
+    public String changeImage(@RequestParam MultipartFile file, @RequestParam String imageName, @RequestParam long hobbyId){
+
+        Hobby hobby = hobbyRepository.getOne(hobbyId);
+        if(hobby == null){
+            log.warn("Upsie");
+            return "hobby/list";
+        }else if(!hobby.getFileNames().contains(imageName)){
+            log.warn("Upsie 2");
+            return "hobby/list";
+        }else if (file == null ||file.isEmpty()){
+            log.warn("Upsie 3");
+            return "hobby/list";
+        }
+
+        try(InputStream inputStream = file.getInputStream()){ // strumień danych
+            Path rootLocation = Paths.get("upload");
+            Files.copy(inputStream, rootLocation.resolve(imageName), StandardCopyOption.REPLACE_EXISTING);
+        }catch (IOException e){
+            System.out.println("Obrassek spsuty!");
+        }
+        return "redirect:list";
     }
 
 }

@@ -30,10 +30,17 @@
             </td>
         </tr>
         <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
-        <tr>
-            <td colspan="2"><button type="submit">Edytuj</button></td>
-        </tr>
+
+<!--Tutaj Alien kopie dlatego jest syf fest
+!-->
     </table>
+    <ul>
+        <li th:each="imageName : ${hobby.getFileNames()}">
+            <img th:src="@{/images/{img}(img=${imageName})}"/>
+            <a th:href="@{deleteImage(hobbyId=${hobby.getId()}, imageName=${imageName})}">Delete</a>
+            <a th:href="@{changeImage(hobbyId=${hobby.getId()}, imageName=${imageName})}">ChangeImage</a>
+        </li>
+    </ul>
 </form>
 </body>
 </html>
