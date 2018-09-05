@@ -2,19 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Stwurzaj role</title>
+    <title>Make a role</title>
 </head>
 <body>
 <form action="/role/save" th:action="@{/role/save}" method="post" name="role" th:object="${role}">
     <table>
         <tr>
-            <td>role</td>
+            <td>role name</td>
             <td>
                 <input type="text" path="name" name="name" th:field="*{name}" /> <br />
             </td>
         </tr>Role creation
         <tr>
-            <td colspan="2"><button type="submit">Rolluj</button></td>
+            <td colspan="2"><button type="submit">Make a roll</button></td>
         </tr>
     </table>
 </form>

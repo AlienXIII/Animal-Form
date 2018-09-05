@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Image Upload</title>
+    <title>Image List & Edit</title>
     <style type="text/css">
         .error {
             color: red;
@@ -20,20 +20,21 @@
     </style>
 </head>
 <body>
-<h1>Insert some image</h1>
-<form action="/hobby/uploadFile" th:action="@{/hobby/uploadFile}" method="post" enctype="multipart/form-data">
+<h1>IMAGE EDIT</h1>
+<form action="/hobby/changeFile" th:action="@{/hobby/changeImage}" method="post" enctype="multipart/form-data">
     <table>
         <tr>
             <td>Image file</td>
             <td><input id ="file" type="file" name="file"></td>
         </tr>
         <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
+        <input type="hidden" name="imageName" th:value="${imageName}"/>
         <tr>
-            <td colspan="2"><button type="submit">UPLOAD</button></td>
+            <td colspan="2"><button type="submit">EDIT IT</button></td>
         </tr>
     </table>
 </form>
 <p>You done? Then go <a href="/">back</a> where you came from</p>
-<p>Let us see what we have on a  <a href="/hobby/list">list</a></p>
+<p>Let's see what we have on a  <a href="/hobby/list">list</a></p>
 </body>
 </html>

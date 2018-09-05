@@ -2,10 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Edycja listy hobby</title>
+    <title>Hobby edit</title>
 </head>
 <body>
-<h1>EDYTUJEMY HOBBY</h1>
+<h1>HOBBY EDIT</h1>
 <form action="/hobby/add" th:action="@{/hobby/save}" method="post" name="hobby" th:object="${hobby}">
     <table>
         <tr>
@@ -30,9 +30,10 @@
             </td>
         </tr>
         <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
+        <tr>
+            <td colspan="2"><button type="submit">Uczyń</button></td>
+        </tr>
 
-<!--Tutaj Alien kopie dlatego jest syf fest
-!-->
     </table>
     <ul>
         <li th:each="imageName : ${hobby.getFileNames()}">

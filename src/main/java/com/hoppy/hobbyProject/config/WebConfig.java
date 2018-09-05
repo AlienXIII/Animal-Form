@@ -35,5 +35,6 @@ public class WebConfig implements WebMvcConfigurer {
         //Mapujemy sobie /images/upload_14.jpg na przykład który wyciąga img z dokładnego miejsca na dysku
         //więc na stronce żeby ukryć ścieżkę absulutną (c:/asd/asd/...) wpisujemy /images/**
         registry.addResourceHandler("/images/**").addResourceLocations("file:///" + env.getProperty("upload.path"));
+        //zmienna środowiskowa brana z app.properties
     }
 }

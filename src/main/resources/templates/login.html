@@ -2,20 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Loguj sie a nie czekasz na oklasky</title>
+    <title>Log in boi!</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
 <div th:if="${param.error}">
-    Juzernejm i pasłord jest inwalidą
+    Username or password are invalid!
 </div>
 <div th:if="${param.logout}">
-    Wylogowany. Sio mie stont, bo psy spuszcze!
+    Logged out! Bye bye!
 </div>
 <form th:action="@{/login}" method="post">
     <div><label> User Name : <input type="text" name="username"/> </label></div>
     <div><label> Password: <input type="password" name="password"/> </label></div>
-    <div><input type="submit" value="Logaj się"/></div>
+    <div><input type="submit" value="Log in"/></div>
 </form>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Wpisz coś ładnego, nie wstydź się</title>
+    <title>Hobby form</title>
     <style type="text/css">
         .error {
             color: red;
@@ -20,7 +20,7 @@
     </style>
 </head>
 <body>
-<h1>NOWE HOBBY</h1>
+<h1>NEW HOBBY</h1>
 <form action="/hobby/add" th:action="@{/hobby/add}" method="post" name="hobby" th:object="${hobby}" enctype="multipart/form-data">
     <table>
         <tr>
@@ -54,11 +54,11 @@
             </td>
         </tr>
         <tr>
-            <td colspan="2"><button type="submit">Uczyń</button></td>
+            <td colspan="2"><button type="submit">MAKE IT HAPPEN</button></td>
         </tr>
     </table>
 </form>
 <p>You done? Then go <a href="/">back</a> where you came from</p>
-<p>Let's what we have on a  <a href="/hobby/list">list</a></p>
+<p>Let's see what we have on a  <a href="/hobby/list">list</a></p>
 </body>
 </html>

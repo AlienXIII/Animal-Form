@@ -132,7 +132,7 @@ public class HobbyController {
 
         File file = new File(env.getProperty("upload.path")+imageName);
         if(!file.delete()){
-            log.warn("Upsie fucken");
+            log.warn("Upsie daisy");
         }//that should do.
         hobby.getFileNames().remove(imageName);
 
