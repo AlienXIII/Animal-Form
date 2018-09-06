@@ -15,8 +15,6 @@
 <p>This will be me pretty webpage with alot of kewl stuff.</p>
 <h2>Holy maccaroni!</h2>
 <p>Look at the awesome <a href="/hobby/hobbyForm">form</a> where you can write down your favourite hobby!</p>
-<p>If you be sexy admin boi or grrrl you can make some new <a href="/user/create">user</a> rite here</p>
-<p>or even make dem new <a href="/role/create">roll!</a> Diz be crazy stuff mon!</p>
 <div sec:authorize="hasAuthority('ROLE_USER')">
     <div class="col-md-10 col-md-offset-2">
         <h2>Just a simple user logged. Go play in dirt or smth</h2>
@@ -33,8 +31,17 @@
     </div>
 </div>
 
-<iframe width="420" height="315"
-        th:src="${yt}" >
-</iframe>
+
+<!--<th:block th:each ="hobby : ${hobbies}">
+    <span th:text="${hobby.name}"></span>
+
+<th:block th:each ="hobby : ${hobbies}">!-->
+    <div class="form-group blu-margin">
+        <select class="form-control" th:field="${hobby.name()}"  >
+            <option value="0" th:text="select hobby" ></option>
+            <option th:each ="hobby : ${hobbies}" th:value="${hobby.id}" th:text="${hobby.name}"></option>
+        </select>
+    </div>
+
 </body>
 </html>

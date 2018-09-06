@@ -14,6 +14,9 @@
         <td><strong>File list</strong></td>
         <td><strong>Upload Link</strong></td>
         <td><strong>Current Image</strong></td>
+        <td><strong>Category</strong></td>
+        <td><strong>YouTube Video URL</strong></td>
+        <td><strong>Amazon Code</strong></td>
     </tr>
     <!-- dla każdego hobby z hobbiesów w modelu
     tę nazwę hobby ustalasz sam
@@ -45,6 +48,9 @@
                 <img th:if="${!hobby.getFileNames().isEmpty()}" th:src="@{/images/{img}(img=${hobby.getFileNames().get(0)})}"
                      height="50" width="50" />
             </td>
+            <td th:text="${hobby.category}"></td>
+            <td th:text="${hobby.youtubeVideos}"></td>
+            <td th:text="${hobby.amazonCode}"></td>
         </tr>
     </th:block>
 </table>

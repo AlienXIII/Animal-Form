@@ -7,6 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.List;
+import java.util.Locale;
 
 //Lombok z automatu dla ciebie robi settery i gettery. nic nie musisz dodawać
 //jeśli jakiś setter czy też getter ma działać inaczej niż standardowo to robisz jak poniżej
@@ -31,4 +32,16 @@ public class Hobby {
 
     @ElementCollection
     private List<String> fileNames;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
+
+    @ElementCollection
+    private List<String> youtubeVideos;
+
+    @Lob
+    String amazonCode;
+
+    Boolean disabled;
+
 }

@@ -44,6 +44,36 @@
             </td>
         </tr>
         <tr>
+            <td>Choose Category</td>
+            <td>
+                <input type="text" path="category" name="category" th:field="*{category}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+            <td>
+                <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Insert YouTube URL</td>
+            <td>
+                <input type="text" path="youtubeVideos" name="youtubeVideos" th:field="*{youtubeVideos}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+            <td>
+                <div th:if="${#fields.hasErrors('youtubeVideos')}" th:errors="*{youtubeVideos}">Error</div>
+            </td>
+        </tr>
+        <tr>
+            <td>Amazon Code</td>
+            <td>
+                <input type="text" path="amazonCode" name="amazonCode" th:field="*{amazonCode}" /> <br />
+                <errors path="name" cssClass="error" />
+            </td>
+            <td>
+                <div th:if="${#fields.hasErrors('amazonCode')}" th:errors="*{amazonCode}">Error</div>
+            </td>
+        </tr>
+        <tr>
             <td colspan="2"><button type="submit">MAKE IT HAPPEN</button></td>
         </tr>
     </table>
