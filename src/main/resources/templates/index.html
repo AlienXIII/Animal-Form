@@ -36,12 +36,16 @@
     <span th:text="${hobby.name}"></span>
 
 <th:block th:each ="hobby : ${hobbies}">!-->
-    <div class="form-group blu-margin">
-        <select class="form-control" th:field="${hobby.name()}"  >
-            <option value="0" th:text="select hobby" ></option>
-            <option th:each ="hobby : ${hobbies}" th:value="${hobby.id}" th:text="${hobby.name}"></option>
-        </select>
-    </div>
+
+
+<select>
+    <option th:each="category : ${T(com.hoppy.hobbyProject.domain.Category).values()}"
+            th:value="${category}"
+            th:text="${category}">
+    </option>
+</select>
+
+
 
 </body>
 </html>

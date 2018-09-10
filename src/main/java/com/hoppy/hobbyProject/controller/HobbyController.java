@@ -2,6 +2,7 @@ package com.hoppy.hobbyProject.controller;
 
 
 import com.hoppy.hobbyProject.Repo.HobbyRepository;
+import com.hoppy.hobbyProject.domain.Category;
 import com.hoppy.hobbyProject.domain.Hobby;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.*;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(path = "/hobby")
@@ -30,13 +32,13 @@ public class HobbyController {
     @Autowired
     Environment env;
 
-    //    ta metoda sszykuje model atrybótów do wykorzystania na hobby/list.html
+    //    ta metoda sszykuje model atrybutów do wykorzystania na hobby/list.html
     //    za pomocą thymeleaf (czyli tagi th:coś) możesz wyciągać różne dane a atrrybutów modelu
     //    np z objektów który przesylasz na list.html
     //    dodajesz do modelu listę hobbiesów więc do nich masz dostęp
     //    chcesz coś innego musisz dodać do modelu
-    //    co chciales zrobić na tej liście? miniaturki z imydży dla każdego hobbysa?aye
-    //    więc pomyśl, wiesz że potrzebujesz listę hobbysow i ją dodales do modelu.
+
+    //    wiesz że potrzebujesz listę hobbysow i ją dodales do modelu.
     //    każdy hobby ma fileNames i możesz ją wyciągnąć getterem getFileNames()
     //    więc iterujesz dwa razy
     //    po hobbysach i wewnątrz po ich zdjęciach
@@ -51,7 +53,7 @@ public class HobbyController {
     public String addHobby(@Valid @ModelAttribute("hobby") Hobby hobby, BindingResult results){
 
         if(results.hasErrors()){
-            System.out.println("an Ilusion? What are you hiding?");
+            System.out.println("Can't add hobby");
 
             return ("hobby/hobbyForm");
         }
@@ -62,6 +64,14 @@ public class HobbyController {
 
     @GetMapping(path = "/hobbyForm")
     public String listForm(Model model){
+
+        //CategoryForm form = new CategoryForm();
+        //model.addAttribute ("categoryForm",form);
+
+        //List<Category> list = hobbyRepository.getCategories();
+        //model.addAttribute("categories",list);
+
+
         model.addAttribute("hobby", new Hobby());
         return "hobby/hobbyForm";
     }
@@ -80,6 +90,9 @@ public class HobbyController {
         hobbyInDb.setCurrentImageID(hobby.getCurrentImageID());
         hobbyInDb.setDescription(hobby.getDescription());
         hobbyInDb.setName(hobby.getName());
+        hobbyInDb.setCategory(hobby.getCategory());
+        hobbyInDb.setAmazonCode(hobby.getAmazonCode());
+        hobbyInDb.setDisabled(hobby.getDisabled());
         hobbyRepository.saveAndFlush(hobbyInDb);
         return "success";
     }
@@ -122,7 +135,7 @@ public class HobbyController {
 
                 hobbyRepository.saveAndFlush(hobby); //wyciągam inputStream z pliku i za pomocą Files zapisuje/kopiuję
             }catch (IOException e){
-                System.out.println("Obrassek spsuty!");
+                System.out.println("Image not working!");
             }
             return "success";
         }
@@ -134,16 +147,16 @@ public class HobbyController {
         Hobby hobby = hobbyRepository.getOne(hobbyId);
 
         if(hobby == null){
-            log.warn("Co to robisz ciulu!?");
+            log.warn("You can't do this");
             return "hobby/list";
         }else  if (!hobby.getFileNames().contains(imageName)){
-            log.info("Ten hobby nie ma takiego imydża");
+            log.info("This hobby doesn't have that image");
             return "hobby/list"; //DRY
         }
 
         File file = new File(env.getProperty("upload.path")+imageName);
         if(!file.delete()){
-            log.warn("Upsie daisy");
+            log.warn("Error");
         }//that should do.
         hobby.getFileNames().remove(imageName);
 
@@ -167,13 +180,13 @@ public class HobbyController {
 
         Hobby hobby = hobbyRepository.getOne(hobbyId);
         if(hobby == null){
-            log.warn("Upsie");
+            log.warn("Error");
             return "hobby/list";
         }else if(!hobby.getFileNames().contains(imageName)){
-            log.warn("Upsie 2");
+            log.warn("Error");
             return "hobby/list";
         }else if (file == null ||file.isEmpty()){
-            log.warn("Upsie 3");
+            log.warn("Error");
             return "hobby/list";
         }
 
@@ -181,7 +194,7 @@ public class HobbyController {
             Path rootLocation = Paths.get("upload");
             Files.copy(inputStream, rootLocation.resolve(imageName), StandardCopyOption.REPLACE_EXISTING);
         }catch (IOException e){
-            System.out.println("Obrassek spsuty!");
+            System.out.println("Image not working");
         }
         return "redirect:list";
     }

@@ -45,10 +45,17 @@
         </tr>
         <tr>
             <td>Choose Category</td>
+
             <td>
-                <input type="text" path="category" name="category" th:field="*{category}" /> <br />
-                <errors path="name" cssClass="error" />
+                <select th:field="*{category}">
+                    <option value="">Hobby Categories</option>
+                    <option th:each="Category : ${hobby.getCategory()}" th:utext="${category}"/>
+                </select>
+
             </td>
+
+
+
             <td>
                 <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
             </td>
