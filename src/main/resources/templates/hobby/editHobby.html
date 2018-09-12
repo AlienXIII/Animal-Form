@@ -21,6 +21,26 @@
                 <input type="text" path="description" name="description" th:field="*{description}" /> <br />
                 <errors path="name" cssClass="error" />
             </td>
+
+        <tr>
+            <td>Category</td>
+
+            <td>
+                <select th:field="*{category}">
+                    <option th:each="category : ${T(com.hoppy.hobbyProject.domain.Category).values()}"
+                            th:value="${category}"
+                            th:text="${category}">
+                    </option>
+                </select>
+
+            </td>
+
+            <td>
+                <div th:if="${#fields.hasErrors('category')}" th:errors="*{category}">Error</div>
+            </td>
+        </tr>
+
+
         </tr>
         <input type="hidden" name="hobbyId" th:value="${hobbyId}"/>
         <tr>

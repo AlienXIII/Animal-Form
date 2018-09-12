@@ -38,14 +38,18 @@
 <th:block th:each ="hobby : ${hobbies}">!-->
 
 
+
+<p>List hobbies by category</p>
 <select>
     <option th:each="category : ${T(com.hoppy.hobbyProject.domain.Category).values()}"
             th:value="${category}"
             th:text="${category}">
     </option>
 </select>
-
-
+<form th:action="@{/{category}}" >
+    <button type="submit">List them</button>
+</form>
+</td>
 
 </body>
 </html>

@@ -48,8 +48,10 @@
 
             <td>
                 <select th:field="*{category}">
-                    <option value="">Hobby Categories</option>
-                    <option th:each="Category : ${hobby.getCategory()}" th:utext="${category}"/>
+                    <option th:each="category : ${T(com.hoppy.hobbyProject.domain.Category).values()}"
+                            th:value="${category}"
+                            th:text="${category}">
+                    </option>
                 </select>
 
             </td>
