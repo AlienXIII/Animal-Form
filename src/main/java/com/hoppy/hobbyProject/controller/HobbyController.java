@@ -87,7 +87,7 @@ public class HobbyController {
     public String editHobby(@Valid @ModelAttribute(name = "hobby") Hobby hobby,
                             @RequestParam Long hobbyId ){
         Hobby hobbyInDb = hobbyRepository.getOne(hobbyId);
-        hobbyInDb.setCurrentImageID(hobby.getCurrentImageID());
+        hobbyInDb.setCurrentImage(hobby.getCurrentImage());
         hobbyInDb.setDescription(hobby.getDescription());
         hobbyInDb.setName(hobby.getName());
         hobbyInDb.setCategory(hobby.getCategory());
@@ -198,5 +198,14 @@ public class HobbyController {
         }
         return "redirect:list";
     }
+
+    //Ponizsze w trakcie pracy
+    @GetMapping(path = "/{setDefaultImage")
+    public String setDefaultImage (@RequestParam String imageName, Model model){
+        model.addAttribute("imageName" , imageName);
+
+        return "success";
+    }
+
 
 }

@@ -53,6 +53,7 @@
             <img th:src="@{/images/{img}(img=${imageName})}"/>
             <a th:href="@{deleteImage(hobbyId=${hobby.getId()}, imageName=${imageName})}">Delete</a>
             <a th:href="@{changeImage(hobbyId=${hobby.getId()}, imageName=${imageName})}">ChangeImage</a>
+            <a th:href="@{setDefaultImage(hobbyId=${hobby.getId()}, imageName=${imageName})}">Set as default image</a>
         </li>
     </ul>
 </form>

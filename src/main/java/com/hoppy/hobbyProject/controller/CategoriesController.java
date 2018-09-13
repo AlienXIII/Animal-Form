@@ -27,7 +27,7 @@ public class CategoriesController {
    @GetMapping("/{category}")
     public String listHobbiesByCategory(@PathVariable("category") String category, Model model){
        List<Hobby> hobbies = hobbyRepository.findAllByCategory(Category.valueOf(category));
-
+        //odwolanie do query
        model.addAttribute("hobbies", hobbies);
        return "hobby/hobbyListByCategory";
     }
