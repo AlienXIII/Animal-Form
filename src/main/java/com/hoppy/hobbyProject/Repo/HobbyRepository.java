@@ -16,7 +16,8 @@ public interface HobbyRepository extends JpaRepository<Hobby, Long> {
     @Query("SELECT SIZE(h.fileNames) FROM Hobby h WHERE h.id=:id")
     long countFilesByHobbyId(@Param("id")long id);
 
-    @Query("SELECT h FROM Hobby h WHERE h.category=:category")  //to jest syntax mysql? poprostu SQL
+    @Query("SELECT h FROM Hobby h WHERE h.category=:category")   //syntax SQL
     List<Hobby> findAllByCategory(@Param("category") Category category);
+    //Szybsza metoda niz wyciaganie wszystkiego i wyszukiwanie przez .FindAll
 }
 

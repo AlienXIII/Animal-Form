@@ -24,10 +24,7 @@ public class CategoriesController {
    @Autowired
    HobbyRepository hobbyRepository;
 
-
-    // znajdź sposób żeby rozwiązać problem w któym użytkownik daje niepoprawnego enuma
-
-    @GetMapping("/{category}")
+   @GetMapping("/{category}")
     public String listHobbiesByCategory(@PathVariable("category") String category, Model model){
        List<Hobby> hobbies = hobbyRepository.findAllByCategory(Category.valueOf(category));
 

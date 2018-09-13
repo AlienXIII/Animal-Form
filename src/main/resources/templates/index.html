@@ -31,25 +31,11 @@
     </div>
 </div>
 
-
-<!--<th:block th:each ="hobby : ${hobbies}">
-    <span th:text="${hobby.name}"></span>
-
-<th:block th:each ="hobby : ${hobbies}">!-->
-
-
-
 <p>List hobbies by category</p>
-<select>
-    <option th:each="category : ${T(com.hoppy.hobbyProject.domain.Category).values()}"
-            th:value="${category}"
-            th:text="${category}">
-    </option>
-</select>
-<form th:action="@{/{category}}" >
-    <button type="submit">List them</button>
-</form>
-</td>
+<a th:href="@{/GYM}">Gym</a>
+<a th:href="@{/ARTS_AND_CRAFTS}">Arts & craft</a>
+<a th:href="@{/CULINARY}">Culinary</a>
+<a th:href="@{/MAP}">Map</a>
 
 </body>
 </html>
