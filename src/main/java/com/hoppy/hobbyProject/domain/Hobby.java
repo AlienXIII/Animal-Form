@@ -28,7 +28,7 @@ public class Hobby {
     @Size (min=1)
     @Lob
     private String description;
-    private int currentImage;
+    private String currentImage;
 
     @ElementCollection
     private List<String> fileNames;

@@ -44,7 +44,7 @@
                     indexOutOfBounds jak sama nazwa wskazuje wypieprza gdy chcesz dostępu do elementu np listy którego niema
                     jeden z hobbysów nie miał wcale plików więc hobby.getFileNames().get(0)
                     niema też pliku na pierwszej pozycji-->
-                <img th:if="${!hobby.getFileNames().isEmpty()}" th:src="@{/images/{img}(img=${hobby.getFileNames().get(0)})}"
+                <img th:if="${hobby.getCurrentImage() != null}" th:src="@{/images/{img}(img=${hobby.getCurrentImage()})}"
                      height="50" width="50" />
             </td>
             <td th:text="${hobby.category}"></td>
