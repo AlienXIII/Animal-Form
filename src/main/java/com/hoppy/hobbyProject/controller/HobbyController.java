@@ -155,7 +155,7 @@ public class HobbyController {
         File file = new File(env.getProperty("upload.path")+imageName);
         if(!file.delete()){
             log.warn("Error");
-        }//that should do.
+        }
         hobby.getFileNames().remove(imageName);
 
         hobbyRepository.saveAndFlush(hobby);
@@ -199,8 +199,6 @@ public class HobbyController {
 
     @GetMapping (path = "/defaultImage")
     public String defaultImage(@RequestParam long hobbyId, @RequestParam String imageName, Model model){
-        model.addAttribute("hobbyId", hobbyId);
-        model.addAttribute("imageName", imageName);
         Hobby hobby = hobbyRepository.getOne(hobbyId);
         hobby.setCurrentImage(imageName);
         hobbyRepository.saveAndFlush(hobby);

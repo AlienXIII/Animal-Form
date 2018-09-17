@@ -27,9 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override //upublicznianie resources z powodu spring security na permit all
+    @Override //nalezy upublicznic resources z powodu spring security na permit all
     protected void configure(HttpSecurity http) throws Exception {
-        http
+                http
                 .authorizeRequests()
                 .antMatchers("/", "/home","home/**",
                         "/test", "/static/**",
