@@ -33,8 +33,10 @@ dependencies {
 	compile group: 'org.thymeleaf.extras', name: 'thymeleaf-extras-springsecurity4', version: '3.0.2.RELEASE'
 	compile("org.springframework.boot:spring-boot-devtools")
     compile group: 'org.projectlombok', name: 'lombok', version: '1.18.2'
-	compile("org.springframework.social:spring-social-facebook")
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+	compile group: 'org.springframework.security', name: 'spring-security-oauth2-client', version: '5.0.8.RELEASE'
+	compile group: 'org.springframework.security', name: 'spring-security-oauth2-jose', version: '5.0.8.RELEASE'
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 

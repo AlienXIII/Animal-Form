@@ -13,18 +13,24 @@
     <h2 th:text="${anonymous}"></h2>
 </div>
 <p>This will be me pretty webpage with alot of kewl stuff.</p>
-<h2>Holy maccaroni!</h2>
-<p>Look at the awesome <a href="/hobby/hobbyForm">form</a> where you can write down your favourite hobby!</p>
+
 <div sec:authorize="hasAuthority('ROLE_USER')">
     <div class="col-md-10 col-md-offset-2">
         <h2>Just a simple user logged. Go play in dirt or smth</h2>
     </div>
 </div>
-<div sec:authorize="hasAuthority('ROLE_ADMIN')">
+    <div sec:authorize="hasAuthority('ROLE_ADMIN')">
     <div class="col-md-10 col-md-offset-2">
         <h2>This be pretty ADMIN panel for da admin people in admin world</h2>
     </div>
-</div>
+    </div>
+    <div sec:authorize="hasAuthority('ROLE_USER_FACEBOOK')">
+
+        <div class="col-md-10 col-md-offset-2">
+            <h2>Facebook user logged in</h2>
+        </div>
+    </div>
+
 <div sec:authorize="isAnonymous()">
     <div class="col-md-10 col-md-offset-2">
         <h2>No logged user. WTF IZ DIZ? Change this NOW peasant!</h2>

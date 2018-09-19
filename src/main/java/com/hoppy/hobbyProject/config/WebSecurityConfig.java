@@ -8,6 +8,11 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 
 @Configuration
@@ -27,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Override //nalezy upublicznic resources z powodu spring security na permit all
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
                 http
                 .authorizeRequests()
@@ -35,14 +40,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/test", "/static/**",
                         "/css/**", "/js/**",
                         "/images/**").permitAll()
-                .antMatchers("/user/**", "/role/**").hasRole("ADMIN")
-                .antMatchers("/hobby/**").authenticated()
-                .anyRequest().authenticated()
+                .antMatchers("/user/**", "/role/**","/hobby","/hobby/**").hasRole("ADMIN")
+                        .anyRequest().authenticated()
                 .and()
-                .formLogin().permitAll();
+                .formLogin().permitAll()
+                .and()
+               .oauth2Login();
+
     }
 
 
+    //Accessing User Information
+
+    @Autowired
+    private OAuth2AuthorizedClientService authorizedClientService;
+
+    @GetMapping("/loginSuccess")
+    public String getLoginInfo(Model model, OAuth2AuthenticationToken authentication) {
+        OAuth2AuthorizedClient client = authorizedClientService
+                .loadAuthorizedClient(
+                        authentication.getAuthorizedClientRegistrationId(),
+                        authentication.getName());
+        return "loginSuccess";
+    }
 
 
 
